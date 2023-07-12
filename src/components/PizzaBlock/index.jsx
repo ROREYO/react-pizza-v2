@@ -1,9 +1,12 @@
 import { useState } from 'react';
 
-const PizzaBlock = ({ imageUrl, title, types, sizes, price }) => {
+const typeNames = ['тонкое', 'традиционное'];
+
+const PizzaBlock = ({ id, imageUrl, title, types, sizes, price }) => {
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(0);
-  const typeNames = ['тонкое', 'традиционное'];
+
+  const addedCount = cartItem ? cartItem.count : 0;
 
   return (
     <div className="pizza-block-wrapper">
@@ -34,7 +37,7 @@ const PizzaBlock = ({ imageUrl, title, types, sizes, price }) => {
         </div>
         <div className="pizza-block__bottom">
           <div className="pizza-block__price">от {price} ₽</div>
-          <button className="button button--outline button--add">
+          <button onClick={onClickAdd} className="button button--outline button--add">
             <svg
               width="12"
               height="12"
@@ -47,7 +50,7 @@ const PizzaBlock = ({ imageUrl, title, types, sizes, price }) => {
               />
             </svg>
             <span>Добавить</span>
-            <i>0</i>
+            {addedCount > 0 && <i>{addedCount}</i>}
           </button>
         </div>
       </div>
