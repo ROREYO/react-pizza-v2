@@ -6,6 +6,21 @@ import CartItem from '../components/CartItem';
 import CartEmpty from '../components/CartEmpty';
 
 const Cart = () => {
+  const dispatch = useDispatch();
+  const { totalPrice, items } = useSelector((state) => state.cart);
+
+  const totalCount = items.reduce((sum, item) => sum + item.count, 0);
+
+  const onlickCleare = () => {
+    if (window.confirm('Ты действительно хочешь очистить корзину?')) {
+      dispatch(clearItems());
+    }
+  };
+
+  if (!totalPrice) {
+    return <CartEmpty />;
+  }
+
   return (
     <div class="container container--cart">
       <div class="cart">
@@ -83,11 +98,11 @@ const Cart = () => {
           <div class="cart__bottom-details">
             <span>
               {' '}
-              Всего пицц: <b>{} шт.</b>{' '}
+              Всего пицц: <b>{totalCount} шт.</b>{' '}
             </span>
             <span>
               {' '}
-              Сумма заказа: <b>{} ₽</b>{' '}
+              Сумма заказа: <b>{totalPrice} ₽</b>{' '}
             </span>
           </div>
           <div class="cart__bottom-buttons">
